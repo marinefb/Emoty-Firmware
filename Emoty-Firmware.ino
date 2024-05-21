@@ -4,7 +4,7 @@
 
 const int stripPin = A5;
 
-Adafruit_NeoPixel strip(28, stripPin, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(37, stripPin, NEO_GRB + NEO_KHZ800);
 // Argument 1 = Number of pixels in NeoPixel strip
 // Argument 2 = Arduino pin number (most are valid)
 // Argument 3 = Pixel type flags, add together as needed:
@@ -22,10 +22,14 @@ Adafruit_NeoPixel strip(28, stripPin, NEO_GRB + NEO_KHZ800);
 //   connect GROUND (-) first, then +, then data.
 // - When using a 3.3V microcontroller with a 5V-powered NeoPixel strip,
 //   a LOGIC-LEVEL CONVERTER on the data line is STRONGLY RECOMMENDED.
-// (Skipping these may work OK on your workbench but can fail in the field)
+// (Skipping these may work OK on your workbench but can fail in the field) 
 
 //uint8_t rgb_values[3];
 
+// pin numbers
+#define BTN_IDLE 2
+#define BTN_HAPPY 3
+#define BTN_SAD 4
 
 #include "AppStates.h"
 
@@ -44,6 +48,11 @@ void setup() {
   pinMode(stripPin, OUTPUT);
   digitalWrite(stripPin, LOW);
 
+  pinMode(BTN_IDLE, INPUT_PULLUP);
+  pinMode(BTN_HAPPY, INPUT_PULLUP);
+  pinMode(BTN_SAD, INPUT_PULLUP);
+  // TODO: les autres
+
 
   sm.changeState(new StateIdle());
 }
@@ -55,6 +64,8 @@ void loop() {
   {
     sm.changeState(newState);
   }
+
+  checkButtons();
 
   sm.loop();
 }
@@ -74,8 +85,18 @@ State *checkSerial()
       return new StateSad();
     case '3':
       return new StateSurprised();
+    case '4':
+      return new StateDisgusted();
+    case '5':
+      return new StateScared();
+    case '6':
+      return new StateAngry();
     }
   }
   
   return NULL;
 }
+
+void checkButtons ( )
+
+{}
