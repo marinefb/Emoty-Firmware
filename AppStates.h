@@ -44,3 +44,33 @@ class StateSurprised : public State
 
   void exit();
 };
+
+class StateDisgusted : public State
+{
+  void enter();
+
+  // Loop is declared here, but implemented below, after the declaration of other states
+  State *loop();
+
+  void exit();
+};
+
+class StateScared : public State
+{
+  void enter();
+
+  // Loop is declared here, but implemented below, after the declaration of other states
+  State *loop();
+
+  void exit();
+};
+
+class StateAngry : public State
+{
+  void enter();
+
+  // Loop is declared here, but implemented below, after the declaration of other states
+  State *loop();
+
+  void exit();
+};

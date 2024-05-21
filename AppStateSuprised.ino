@@ -17,7 +17,7 @@ State *StateSurprised::loop()
     lastTime = currentTime;
     for(int i=0; i<strip.numPixels(); i++) {
       if((currentTime / 100) % 2 == 0) { // Blink on even intervals
-        strip.setPixelColor(i, strip.Color(50, 50, 50)); // Set all LEDs to white
+        strip.setPixelColor(i, strip.Color(50, 0, 0)); // Set all LEDs to white
       } else {
         strip.setPixelColor(i, strip.Color(0, 0, 0)); // Turn off all LEDs
       }
