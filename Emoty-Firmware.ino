@@ -22,9 +22,9 @@ Adafruit_NeoPixel strip(37, stripPin, NEO_GRB + NEO_KHZ800);
 //   connect GROUND (-) first, then +, then data.
 // - When using a 3.3V microcontroller with a 5V-powered NeoPixel strip,
 //   a LOGIC-LEVEL CONVERTER on the data line is STRONGLY RECOMMENDED.
-// (Skipping these may work OK on your workbench but can fail in the field) 
+// (Skipping these may work OK on your workbench but can fail in the field)
 
-//uint8_t rgb_values[3];
+// uint8_t rgb_values[3];
 
 // pin numbers
 #define BTN_IDLE 2
@@ -35,7 +35,8 @@ Adafruit_NeoPixel strip(37, stripPin, NEO_GRB + NEO_KHZ800);
 
 StateMachine sm;
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   while (!Serial && millis() < 4000)
     ;
@@ -53,11 +54,11 @@ void setup() {
   pinMode(BTN_SAD, INPUT_PULLUP);
   // TODO: les autres
 
-
   sm.changeState(new StateIdle());
 }
 
-void loop() {
+void loop()
+{
 
   State *newState = checkSerial();
   if (newState != NULL)
@@ -75,7 +76,7 @@ State *checkSerial()
   if (Serial.available() > 0)
   {
     char c = Serial.read();
-    switch(c)
+    switch (c)
     {
     case '0':
       return new StateIdle();
@@ -93,10 +94,28 @@ State *checkSerial()
       return new StateAngry();
     }
   }
-  
+
   return NULL;
 }
 
-void checkButtons ( )
-
-{}
+void checkButtons()
+{
+  if (sm.getState()->getStateTime() > 1000)
+  {
+    if (digitalRead(BTN_IDLE) == LOW)
+    {
+      sm.changeState(new StateIdle());
+      delay(100);
+    }
+    if (digitalRead(BTN_HAPPY) == LOW)
+    {
+      sm.changeState(new StateHappy());
+      delay(100);
+    }
+    if (digitalRead(BTN_SAD) == LOW)
+    {
+      sm.changeState(new StateSad());
+      delay(100);
+    }
+  }
+}
