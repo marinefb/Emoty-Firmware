@@ -30,6 +30,10 @@ Adafruit_NeoPixel strip(37, stripPin, NEO_GRB + NEO_KHZ800);
 #define BTN_IDLE 2
 #define BTN_HAPPY 3
 #define BTN_SAD 4
+#define BTN_SURPRISED 5
+#define BTN_DISGUSTED 6
+#define BTN_SCARED 7
+#define BTN_ANGRY 8
 
 #include "AppStates.h"
 
@@ -52,6 +56,10 @@ void setup()
   pinMode(BTN_IDLE, INPUT_PULLUP);
   pinMode(BTN_HAPPY, INPUT_PULLUP);
   pinMode(BTN_SAD, INPUT_PULLUP);
+  pinMode(BTN_SURPRISED, INPUT_PULLUP);
+  pinMode(BTN_DISGUSTED, INPUT_PULLUP);
+  pinMode(BTN_SCARED, INPUT_PULLUP);
+  pinMode(BTN_ANGRY, INPUT_PULLUP);
   // TODO: les autres
 
   sm.changeState(new StateIdle());
@@ -115,6 +123,26 @@ void checkButtons()
     if (digitalRead(BTN_SAD) == LOW)
     {
       sm.changeState(new StateSad());
+      delay(100);
+    }
+    if (digitalRead(BTN_SURPRISED) == LOW)
+    {
+      sm.changeState(new StateSurprised());
+      delay(100);
+    }
+    if (digitalRead(BTN_DISGUSTED) == LOW)
+    {
+      sm.changeState(new StateDisgusted());
+      delay(100);
+    }
+    if (digitalRead(BTN_SCARED) == LOW)
+    {
+      sm.changeState(new StateScared());
+      delay(100);
+    }
+    if (digitalRead(BTN_ANGRY) == LOW)
+    {
+      sm.changeState(new StateAngry());
       delay(100);
     }
   }
